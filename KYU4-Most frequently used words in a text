@@ -1,0 +1,32 @@
+def top_3_words(text):
+    # Dictonary of unique words so we can keep count of how many times each word appears in the text
+    unique = {}
+    
+    # Handle empty text case
+    if not text:
+        return ""
+    
+    # Remove everything that isn't a letter or an apostrophe from the text, and replace it with a space
+    for character in text:
+        if not (character.isalpha() or character == "'"):
+            text = text.replace(character, " ")
+            
+    # Check each word in the text, verify if it has at least one letter in between the apostrophes, and add them to the dictonary
+    for word in text.split():
+        if word.count("'") == len(word):
+            break
+        if word.lower() in unique:
+            unique[word.lower()] += 1
+        else:
+            unique[word.lower()] = 1
+                
+    # Sort the dictonary based on the keys, inversed since we want the biggest values first
+    sorted_unique = dict(sorted(unique.items(), key=lambda x: x[1], reverse= True))
+
+    # Append only the keys to a list
+    results = []
+    results = list(sorted_unique.keys())
+    
+    # Return up to the 3 first entries in the list
+    return list(sorted_unique.keys())[:3]
+    
